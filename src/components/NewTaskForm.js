@@ -42,7 +42,7 @@ function NewTaskForm({ categories, onTaskFormSubmit }) {
       </label>
       <input
         type="submit"
-        value="Add task"  // Changed to lowercase 't' to match test regex
+        value="Add task"
       />
     </form>
   );
