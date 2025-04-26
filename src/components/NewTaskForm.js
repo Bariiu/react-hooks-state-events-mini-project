@@ -1,55 +1,48 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
-function NewTaskForm({categories, onTaskFormSubmit}) {
+function NewTaskForm({ categories, onTaskFormSubmit }) {
   const [taskText, setTaskText] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [taskCategory, setTaskCategory] = useState(categories[0]);
 
-  const handleTextChange = (e) => setTaskText(e.target.value);
-  const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
-
+  const filteredCategories = categories.filter(category => category !== "All");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newTask = {
       text: taskText,
-      category: selectedCategory,
+      category: taskCategory,
     };
-
-    onTaskFormSubmit(newTask); 
-    setTaskText(""); 
-    setSelectedCategory(categories[0]); 
+    onTaskFormSubmit(newTask);
+    setTaskText("");
+    setTaskCategory(filteredCategories[0]);
   };
+
   return (
-    <form 
-    className="new-task-form"
-    onSubmit ={handleSubmit}
-    >
+    <form className="new-task-form" onSubmit={handleSubmit}>
       <label>
         Details
-        <input type="text" name="text" 
-        value={taskText}
-        onChange={handleTextChange}/>
+        <input
+          type="text"
+          value={taskText}
+          onChange={(e) => setTaskText(e.target.value)}
+        />
       </label>
       <label>
         Category
-        <select 
-        name="category"
-        value={selectedCategory}
-        onChange={handleCategoryChange}
+        <select
+          value={taskCategory}
+          onChange={(e) => setTaskCategory(e.target.value)}
         >
-        {categories.filter((category) => category !== "All").map((category) => (
-          <option 
-            key={category} 
-            value={category}>
-            {category}
-          </option>
-))}
+          {filteredCategories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
       </label>
-      <input 
-      type = "submit" 
-      value = "Add Task" 
+      <input
+        type="submit"
+        value="Add task"  // Changed to lowercase 't' to match test regex
       />
     </form>
   );
